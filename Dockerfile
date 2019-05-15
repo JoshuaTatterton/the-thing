@@ -18,8 +18,15 @@ RUN mix local.hex --force
 # Compile the project
 RUN mix do compile
 
-RUN echo "hi there"
+# update the repository sources list
+# and install dependencies
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
 
-RUN echo $PGHOST
+# confirm installation
+RUN node -v
+RUN npm -v
+
+RUN cd /app/assets && npm install
 
 RUN "/app/entrypoint.sh"
